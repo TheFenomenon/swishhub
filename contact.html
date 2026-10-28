@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact &mdash; SwishHub Interactive</title>
+  <meta name="description" content="Contact SwishHub Interactive. Message us on WhatsApp, or use the form to put your enquiry together and send it to us there.">
+
+  <link rel="stylesheet" href="css/site.css">
+  <script src="js/script.js" defer></script>
+  <script src="js/contact.js" defer></script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+
+      <a class="site-brand" href="index.html">
+        <img src="assets/brand/swishhub-logo-primary.png" alt="SwishHub Interactive">
+      </a>
+
+      <button class="button site-nav-toggle" type="button"
+              aria-expanded="false" aria-controls="site-nav">Menu</button>
+
+      <nav class="site-nav" id="site-nav" aria-label="Main">
+        <ul class="site-nav__list">
+          <li><a class="site-nav__link" href="index.html">Home</a></li>
+          <li><a class="site-nav__link" href="services.html">Services</a></li>
+          <li><a class="site-nav__link" href="work.html">Work</a></li>
+          <li><a class="site-nav__link" href="journal.html">Blog</a></li>
+          <li><a class="site-nav__link" href="about.html">About</a></li>
+          <li><a class="site-nav__link" href="contact.html" aria-current="page">Contact</a></li>
+        </ul>
+      </nav>
+
+      <a class="button button--primary site-header__cta" href="#enquiry">Start a Project</a>
+
+    </div>
+  </header>
+
+  <main>
+
+    <section class="contact-hero">
+      <div class="container">
+
+        <p class="contact-eyebrow">Contact</p>
+
+        <h1 class="contact-hero__title"><span class="contact-hero__title-lead">Tell us what you&rsquo;re trying to do.</span> <span class="contact-hero__title-main">We&rsquo;ll <span class="contact-hero__highlight">start from there.</span></span></h1>
+
+        <div class="contact-hero__body">
+          <p class="contact-hero__lead">WhatsApp is the direct way to reach us. If you would rather organise your thoughts first, use the form below to put your enquiry together, then send it to us on WhatsApp.</p>
+
+          <div class="contact-hero__actions">
+            <a class="button button--primary" href="https://wa.me/2347040265312" target="_blank" rel="noopener noreferrer">Message Us on WhatsApp<span class="visually-hidden"> (opens in a new tab)</span></a>
+            <a class="button button--secondary" href="#enquiry">Write Your Enquiry</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="contact-enquiry" id="enquiry">
+      <div class="container">
+        <div class="contact-enquiry__inner">
+
+          <div class="contact-enquiry__intro">
+            <p class="contact-eyebrow contact-eyebrow--quiet">Your enquiry</p>
+            <h2 class="contact-enquiry__title">Put your enquiry together.</h2>
+            <p class="contact-enquiry__lead">This form doesn&rsquo;t send anything by itself. It prepares a WhatsApp message for you to check and send. Nothing you type leaves this page until you choose to open WhatsApp.</p>
+
+            <ol class="contact-steps" role="list">
+              <li class="contact-step">
+                <span class="contact-step__num" aria-hidden="true">01</span>
+                <p>Tell us who you are and what you need.</p>
+              </li>
+              <li class="contact-step">
+                <span class="contact-step__num" aria-hidden="true">02</span>
+                <p>Check the message we prepare. Nothing has been sent at this point.</p>
+              </li>
+              <li class="contact-step">
+                <span class="contact-step__num" aria-hidden="true">03</span>
+                <p>Open WhatsApp and press send. That is when your enquiry reaches us.</p>
+              </li>
+            </ol>
+          </div>
+
+          <div class="contact-enquiry__panel">
+
+            <noscript>
+              <p class="contact-noscript">The form needs JavaScript to prepare your message. You can still <a href="https://wa.me/2347040265312" target="_blank" rel="noopener noreferrer">message us on WhatsApp</a> directly.</p>
+            </noscript>
+
+            <form class="contact-form" id="enquiry-form" novalidate hidden>
+
+              <p class="contact-form__note">Fields marked optional can be left blank. Everything else is needed to prepare your message.</p>
+
+              <p class="contact-form__status" id="form-status" role="status"></p>
+
+          <div class="field">
+            <label class="field__label" for="f-name">Name</label>
+            <input class="field__control" id="f-name" name="name" type="text" autocomplete="name" maxlength="80" required aria-describedby="f-name-error">
+            <p class="field__error" id="f-name-error" hidden></p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="f-business">Business or brand name <span class="field__optional">(optional)</span></label>
+            <input class="field__control" id="f-business" name="business" type="text" autocomplete="organization" maxlength="100" aria-describedby="f-business-error">
+            <p class="field__error" id="f-business-error" hidden></p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="f-email">Email address</label>
+            <input class="field__control" id="f-email" name="email" type="email" autocomplete="email" maxlength="120" required aria-describedby="f-email-error">
+            <p class="field__error" id="f-email-error" hidden></p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="f-phone">WhatsApp or phone number</label>
+            <input class="field__control" id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="25" required aria-describedby="f-phone-error f-phone-hint">
+            <p class="field__hint" id="f-phone-hint">Include the country code if you can, for example +234.</p>
+            <p class="field__error" id="f-phone-error" hidden></p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="f-service">Service required</label>
+            <select class="field__control field__control--select" id="f-service" name="service" required aria-describedby="f-service-error"><option value="">Choose a service</option><option value="Web Development">Web Development</option><option value="Content Writing">Content Writing</option><option value="Social Media Management">Social Media Management</option><option value="YouTube Optimisation &amp; Automation">YouTube Optimisation &amp; Automation</option><option value="AI Video Content">AI Video Content</option><option value="Custom T-Shirts &amp; Stationery Printing">Custom T-Shirts &amp; Stationery Printing</option><option value="Not sure yet">Not sure yet</option></select>
+            <p class="field__error" id="f-service-error" hidden></p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="f-description">A brief description of your project</label>
+            <textarea class="field__control" id="f-description" name="description" rows="6" maxlength="1000" required aria-describedby="f-description-error f-description-hint"></textarea>
+            <p class="field__hint" id="f-description-hint">What are you trying to achieve, or what isn&rsquo;t working? A few sentences is plenty (up to 1,000 characters).</p>
+            <p class="field__error" id="f-description-error" hidden></p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="f-budget">Indicative budget <span class="field__optional">(optional)</span></label>
+            <input class="field__control" id="f-budget" name="budget" type="text" autocomplete="off" maxlength="80" aria-describedby="f-budget-error f-budget-hint">
+            <p class="field__hint" id="f-budget-hint">A rough figure or range is fine, in any currency. You can leave this blank.</p>
+            <p class="field__error" id="f-budget-error" hidden></p>
+          </div>
+
+              <div class="contact-form__actions">
+                <button class="button button--primary" type="submit">Prepare WhatsApp Message</button>
+              </div>
+
+            </form>
+
+            <div class="contact-result" id="enquiry-result" hidden>
+              <h3 class="contact-result__title" id="result-title" tabindex="-1">Your message is ready</h3>
+              <p class="contact-result__lead">Check it below. Nothing has been sent yet. When you press the button, WhatsApp opens with this message ready for you to send.</p>
+              <pre class="contact-result__preview" id="message-preview"></pre>
+              <div class="contact-result__actions">
+                <a class="button button--primary" id="wa-open" href="https://wa.me/2347040265312" target="_blank" rel="noopener noreferrer">Open WhatsApp<span class="visually-hidden"> (opens in a new tab)</span></a>
+                <button class="button button--secondary" type="button" id="copy-message">Copy Message</button>
+                <button class="contact-result__edit" type="button" id="edit-details">Change my details</button>
+              </div>
+              <p class="contact-result__status" id="copy-status" role="status"></p>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="cta">
+      <div class="container">
+        <div class="cta__inner">
+
+          <p class="cta__eyebrow">Prefer to skip the form?</p>
+
+          <h2 class="cta__title">Message us directly.</h2>
+
+          <div class="cta__body">
+            <p class="cta__lead">Tell us what you&rsquo;re trying to achieve and we&rsquo;ll take it from there. Our WhatsApp number is +234 704 026 5312.</p>
+
+            <div class="cta__actions">
+              <a class="button button--primary" href="https://wa.me/2347040265312" target="_blank" rel="noopener noreferrer">Message Us on WhatsApp<span class="visually-hidden"> (opens in a new tab)</span></a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+
+      <div class="site-footer__grid">
+
+        <div class="site-footer__brand">
+          <p class="site-footer__name">SwishHub Interactive</p>
+          <p class="site-footer__tagline">Digital experiences that move business forward.</p>
+        </div>
+
+        <nav class="site-footer__group" aria-labelledby="footer-explore">
+          <h2 class="site-footer__heading" id="footer-explore">Explore</h2>
+          <ul class="site-footer__list site-footer__list--links" role="list">
+            <li><a class="site-footer__link" href="index.html">Home</a></li>
+            <li><a class="site-footer__link" href="services.html">Services</a></li>
+            <li><a class="site-footer__link" href="work.html">Work</a></li>
+            <li><a class="site-footer__link" href="journal.html">Blog</a></li>
+            <li><a class="site-footer__link" href="about.html">About</a></li>
+            <li><a class="site-footer__link" href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+
+        <div class="site-footer__group">
+          <h2 class="site-footer__heading">Services</h2>
+          <ul class="site-footer__list" role="list">
+            <li>Web Development</li>
+            <li>Content Writing</li>
+            <li>Social Media Management</li>
+            <li>YouTube Optimisation &amp; Automation</li>
+            <li>AI Video Content</li>
+            <li>Custom T-Shirts &amp; Stationery Printing</li>
+          </ul>
+        </div>
+
+        <div class="site-footer__group site-footer__start">
+          <h2 class="site-footer__heading">Start a project</h2>
+          <p class="site-footer__text">Have something in mind? Let&rsquo;s talk about what you&rsquo;re trying to achieve.</p>
+          <a class="button button--primary" href="contact.html">Start a Project</a>
+        </div>
+
+      </div>
+
+      <div class="site-footer__legal">
+        <p>&copy; 2026 SwishHub Interactive Limited. All rights reserved.</p>
+      </div>
+
+    </div>
+  </footer>
+
+</body>
+</html>
