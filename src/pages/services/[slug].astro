@@ -1,0 +1,192 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/site/Header.astro";
+import Footer from "../../components/site/Footer.astro";
+import { services, type Service } from "../../data/services";
+import { site } from "../../data/site";
+
+export async function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+
+const whatsappMessage = encodeURIComponent(
+  `Hello SwishHub, I'd like to discuss your ${service.title} service.`
+);
+const serviceWhatsappUrl = `${site.whatsappUrl}?text=${whatsappMessage}`;
+---
+
+<Layout
+  title={service.title}
+  description={service.description}
+>
+  <Header />
+
+  <main id="main-content">
+    <article class="service-detail">
+      <header class="detail-hero container">
+        <div class="hero-meta">
+          <span class="service-number">{service.number}</span>
+          <span class="service-category">{service.category}</span>
+        </div>
+        <h1>{service.title}</h1>
+        <p class="hero-desc">{service.longDescription}</p>
+        <a class="button" href={serviceWhatsappUrl} target="_blank" rel="noopener noreferrer">
+          Discuss this service <span aria-hidden="true">↗</span>
+        </a>
+      </header>
+
+      <section class="detail-body container">
+        <div class="deliverables-box">
+          <h2>What is included</h2>
+          <ul class="deliverables-list">
+            {service.deliverables.map((item) => (
+              <li>
+                <span class="bullet" aria-hidden="true">→</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="approach-box">
+          <h2>Our approach</h2>
+          <p>{service.approach}</p>
+        </div>
+      </section>
+
+      <section class="detail-cta">
+        <div class="container">
+          <h2>Ready to move your business forward?</h2>
+          <p>Let's discuss how our {service.title.toLowerCase()} service can help you achieve your goals.</p>
+          <a class="button" href={serviceWhatsappUrl} target="_blank" rel="noopener noreferrer">
+            Start a conversation ↗
+          </a>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .service-detail {
+    padding-bottom: 6rem;
+  }
+
+  .detail-hero {
+    padding-block: clamp(5rem, 10vw, 9rem);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-number {
+    color: var(--color-accent);
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .service-category {
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+  }
+
+  .detail-hero h1 {
+    max-width: 900px;
+    margin-bottom: 1.5rem;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    letter-spacing: -0.05em;
+  }
+
+  .hero-desc {
+    max-width: 700px;
+    margin-bottom: 2.5rem;
+    font-size: var(--text-lg);
+  }
+
+  .detail-body {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 4rem;
+    padding-block: clamp(5rem, 10vw, 8rem);
+  }
+
+  .deliverables-box h2,
+  .approach-box h2 {
+    margin-bottom: 1.5rem;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+  }
+
+  .deliverables-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .deliverables-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .deliverables-list .bullet {
+    color: var(--color-accent);
+    font-weight: bold;
+  }
+
+  .approach-box p {
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    color: var(--color-muted);
+  }
+
+  .detail-cta {
+    padding-block: clamp(5rem, 10vw, 8rem);
+    background: var(--color-paper-deep);
+    border-top: 1px solid var(--color-line);
+    text-align: center;
+  }
+
+  .detail-cta h2 {
+    max-width: 700px;
+    margin-inline: auto;
+    margin-bottom: 1rem;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+  }
+
+  .detail-cta p {
+    max-width: 550px;
+    margin-inline: auto;
+    margin-bottom: 2rem;
+    font-size: var(--text-lg);
+  }
+
+  @media (max-width: 800px) {
+    .detail-body {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+</style>
