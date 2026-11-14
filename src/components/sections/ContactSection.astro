@@ -1,0 +1,154 @@
+
+---
+import { site } from "../../data/site";
+---
+
+<section class="contact-section" id="contact" aria-labelledby="contact-heading">
+  <div class="container">
+    <div class="contact-top">
+      <p class="section-label">HAVE A PROJECT IN MIND?</p>
+      <span class="contact-index">LET'S MAKE IT MOVE.</span>
+    </div>
+
+    <div class="contact-content">
+      <h2 id="contact-heading">
+        Let's make your next
+        <em>move a meaningful one.</em>
+      </h2>
+
+      <p>
+        Whether you have a clear brief or just an idea you're
+        trying to figure out, we'd like to hear about it.
+        Tell us what you're working on. Let's explore how
+        SwishHub can help.
+      </p>
+
+      <a
+        class="contact-button"
+        href={site.whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Start a conversation with SwishHub on WhatsApp"
+      >
+        Start a conversation
+        <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+
+    <div class="contact-bottom">
+      <span>GOOD IDEAS DESERVE GOOD EXECUTION.</span>
+      <span>SWISHHUB INTERACTIVE LIMITED</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-section {
+    padding-block: clamp(5rem, 11vw, 10rem);
+    background: var(--color-accent);
+    color: var(--color-white);
+  }
+
+  .contact-section .section-label {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .contact-section .section-label::before {
+    background: var(--color-white);
+  }
+
+  .contact-top,
+  .contact-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .contact-index,
+  .contact-bottom {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+  }
+
+  .contact-index {
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .contact-content {
+    max-width: 900px;
+    padding-block: clamp(3rem, 7vw, 6rem);
+  }
+
+  .contact-content h2 {
+    margin-bottom: 2rem;
+    color: var(--color-white);
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    letter-spacing: -0.06em;
+  }
+
+  .contact-content h2 em {
+    display: block;
+    color: var(--color-ink);
+    font-weight: 400;
+  }
+
+  .contact-content > p {
+    max-width: 570px;
+    margin-bottom: 2.5rem;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: var(--text-lg);
+  }
+
+  .contact-button {
+    display: inline-flex;
+    min-height: 3.5rem;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1rem 1.5rem;
+    background: var(--color-ink);
+    color: var(--color-white);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    transition: background var(--transition-fast);
+  }
+
+  .contact-button:hover {
+    background: #302720;
+  }
+
+  .contact-button span {
+    font-size: 1.2rem;
+  }
+
+  .contact-bottom {
+    flex-wrap: wrap;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  @media (max-width: 600px) {
+    .contact-top {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .contact-index {
+      margin-top: 0.5rem;
+    }
+
+    .contact-content h2 {
+      font-size: clamp(2.8rem, 13vw, 4rem);
+    }
+
+    .contact-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+  }
+</style>

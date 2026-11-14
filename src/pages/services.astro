@@ -1,0 +1,98 @@
+
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/site/Header.astro";
+import Footer from "../components/site/Footer.astro";
+import ServicesSection from "../components/sections/ServicesSection.astro";
+import { site } from "../data/site";
+---
+
+<Layout
+  title="Our Services"
+  description="Explore SwishHub's web development, content, social media, YouTube optimisation, AI-assisted video and print services."
+>
+  <Header />
+
+  <main id="main-content">
+    <section class="services-hero container">
+      <p class="section-label">WHAT WE BRING TO THE TABLE</p>
+      <h1>
+        The right mix of
+        <em>thinking and execution.</em>
+      </h1>
+      <p>
+        From building your digital presence to communicating your
+        value and creating the materials that bring your brand to life,
+        we help businesses move from ideas to meaningful action.
+      </p>
+      <a class="button" href={site.whatsappUrl} target="_blank" rel="noopener noreferrer">
+        Discuss a project <span aria-hidden="true">↗</span>
+      </a>
+    </section>
+
+    <ServicesSection />
+
+    <section class="services-closing">
+      <div class="container">
+        <p class="section-label">NOT SURE WHERE TO START?</p>
+        <h2>Let's figure out what your business needs.</h2>
+        <p>
+          You don't need to have everything figured out before
+          starting a conversation. Tell us about your business
+          and what you're trying to achieve.
+        </p>
+        <a class="button" href={site.whatsappUrl} target="_blank" rel="noopener noreferrer">
+          Talk to SwishHub ↗
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .services-hero {
+    padding-block: clamp(6rem, 12vw, 10rem);
+  }
+
+  .services-hero h1 {
+    max-width: 950px;
+    margin-bottom: 1.5rem;
+    font-size: var(--text-display);
+    letter-spacing: -0.065em;
+  }
+
+  .services-hero h1 em {
+    display: block;
+    color: var(--color-accent);
+    font-weight: 400;
+  }
+
+  .services-hero > p:not(.section-label) {
+    max-width: 650px;
+    margin-bottom: 2rem;
+    font-size: var(--text-lg);
+  }
+
+  .services-closing {
+    padding-block: clamp(5rem, 10vw, 9rem);
+    border-top: 1px solid var(--color-line);
+    background: var(--color-paper-deep);
+  }
+
+  .services-closing h2 {
+    max-width: 750px;
+    margin-bottom: 1.5rem;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+  }
+
+  .services-closing .container > p:not(.section-label) {
+    max-width: 620px;
+    font-size: var(--text-lg);
+  }
+
+  .services-closing .button {
+    margin-top: 1rem;
+  }
+</style>

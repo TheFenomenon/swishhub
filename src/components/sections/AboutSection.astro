@@ -1,0 +1,141 @@
+
+<section class="about-section" id="about" aria-labelledby="about-heading">
+  <div class="container about-grid">
+    <div class="about-heading">
+      <p class="section-label">A DIFFERENT WAY TO BUILD</p>
+      <h2 id="about-heading">
+        We see the business behind the
+        <em>digital experience.</em>
+      </h2>
+    </div>
+
+    <div class="about-copy">
+      <p class="about-lead">
+        A website should do more than look impressive.
+        Content should do more than fill a calendar.
+        Technology should do more than exist.
+      </p>
+
+      <p>
+        Every business has something valuable to offer.
+        But communicating that value clearly, reaching the
+        right people and earning their confidence takes
+        deliberate thinking.
+      </p>
+
+      <p>
+        That's where SwishHub comes in. We bring sales thinking,
+        digital creativity, technology and strategic communication
+        together to create experiences that help businesses move forward.
+      </p>
+
+      <a class="about-link" href="#contact">
+        Let's talk about your business <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="container about-bottom">
+    <span>CLARITY</span>
+    <span aria-hidden="true">/</span>
+    <span>CREATIVITY</span>
+    <span aria-hidden="true">/</span>
+    <span>COMMERCIAL THINKING</span>
+  </div>
+</section>
+
+<style>
+  .about-section {
+    padding-block: clamp(5rem, 10vw, 9rem);
+    background: var(--color-paper);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 0.85fr;
+    gap: clamp(3rem, 8vw, 8rem);
+    align-items: start;
+  }
+
+  .about-heading h2 {
+    max-width: 650px;
+    margin-bottom: 0;
+    font-size: clamp(2.6rem, 5.5vw, 5rem);
+  }
+
+  .about-heading h2 em {
+    display: block;
+    color: var(--color-accent);
+    font-weight: 400;
+  }
+
+  .about-copy {
+    padding-top: 2.5rem;
+  }
+
+  .about-copy p {
+    max-width: 570px;
+    margin-bottom: 1.4rem;
+  }
+
+  .about-copy .about-lead {
+    color: var(--color-ink);
+    font-family: var(--font-heading);
+    font-size: clamp(1.4rem, 2.3vw, 1.9rem);
+    line-height: 1.35;
+  }
+
+  .about-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-accent);
+    color: var(--color-accent);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .about-link span {
+    transition: transform var(--transition-fast);
+  }
+
+  .about-link:hover span {
+    transform: translate(3px, -3px);
+  }
+
+  .about-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    margin-top: clamp(4rem, 8vw, 7rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-line);
+    color: var(--color-muted);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+  }
+
+  .about-bottom span:nth-child(even) {
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 760px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .about-copy {
+      padding-top: 0;
+    }
+
+    .about-bottom {
+      gap: 0.65rem;
+      font-size: 0.65rem;
+    }
+  }
+</style>
