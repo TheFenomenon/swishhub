@@ -257,3 +257,28 @@ p {
     transition-duration: 0.01ms !important;
   }
 }
+/* Smooth Section Scroll Rhythm */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Enable desktop scroll-snap framing for a stationery feel */
+@media (min-width: 1024px) {
+  body {
+    scroll-snap-type: y proximity;
+  }
+  
+  section {
+    scroll-snap-align: start;
+  }
+}
+
+/* Crisp section separation and spacing */
+section {
+  position: relative;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}

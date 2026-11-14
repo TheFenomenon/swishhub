@@ -2,6 +2,7 @@
 import favicon from "../assets/swishhub-favicon.png";
 import "../styles/global.css";
 import { site } from "../data/site";
+import WhatsAppFloat from "../components/site/WhatsAppFloat.astro";
 
 interface Props {
   title?: string;
@@ -66,5 +67,7 @@ const pageTitle =
     </a>
 
     <slot />
+
+    <WhatsAppFloat />
   </body>
 </html>

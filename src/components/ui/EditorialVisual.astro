@@ -1,0 +1,198 @@
+---
+interface Props {
+  variant?: "framework" | "services";
+}
+
+const { variant = "framework" } = Astro.props;
+---
+
+<div class="editorial-visual" aria-hidden="true">
+  {variant === "framework" ? (
+    <div class="iso-stage">
+      <div class="iso-plane plane-1">
+        <div class="plane-header">
+          <span>01</span>
+          <span>ATTENTION</span>
+        </div>
+        <svg class="plane-svg" viewBox="0 0 280 180" fill="none">
+          <circle cx="140" cy="90" r="68" stroke="currentColor" stroke-width="0.75" stroke-dasharray="3 3" />
+          <circle cx="140" cy="90" r="36" stroke="currentColor" stroke-width="0.75" />
+          <line x1="20" y1="90" x2="260" y2="90" stroke="currentColor" stroke-width="0.6" />
+          <line x1="140" y1="12" x2="140" y2="168" stroke="currentColor" stroke-width="0.6" />
+          <circle cx="140" cy="90" r="3.5" fill="#B23A0E" />
+        </svg>
+      </div>
+
+      <div class="iso-plane plane-2">
+        <div class="plane-header">
+          <span>02</span>
+          <span>TRUST</span>
+        </div>
+        <svg class="plane-svg" viewBox="0 0 280 180" fill="none">
+          <rect x="44" y="32" width="192" height="116" stroke="currentColor" stroke-width="0.75" />
+          <line x1="44" y1="64" x2="236" y2="64" stroke="currentColor" stroke-width="0.75" />
+          <line x1="108" y1="64" x2="108" y2="148" stroke="currentColor" stroke-width="0.75" />
+          <circle cx="60" cy="48" r="2.5" fill="#B23A0E" />
+          <circle cx="70" cy="48" r="2.5" fill="currentColor" />
+        </svg>
+      </div>
+
+      <div class="iso-plane plane-3">
+        <div class="plane-header">
+          <span>03</span>
+          <span class="accent-label">ACTION ↗</span>
+        </div>
+        <svg class="plane-svg" viewBox="0 0 280 180" fill="none">
+          <path d="M56 132 L132 84 L176 102 L228 46" stroke="#B23A0E" stroke-width="1.4" />
+          <circle cx="56" cy="132" r="3" fill="#17130F" />
+          <circle cx="132" cy="84" r="3" fill="#17130F" />
+          <circle cx="176" cy="102" r="3" fill="#17130F" />
+          <circle cx="228" cy="46" r="4.5" fill="#B23A0E" />
+        </svg>
+      </div>
+    </div>
+  ) : (
+    <div class="iso-stage">
+      <div class="iso-plane plane-1">
+        <div class="plane-header">
+          <span>SYSTEMS</span>
+          <span>01 — 02</span>
+        </div>
+        <svg class="plane-svg" viewBox="0 0 280 180" fill="none">
+          <rect x="36" y="28" width="96" height="124" stroke="currentColor" stroke-width="0.75" />
+          <rect x="148" y="28" width="96" height="124" stroke="currentColor" stroke-width="0.75" stroke-dasharray="3 3" />
+          <circle cx="84" cy="90" r="4" fill="#B23A0E" />
+          <circle cx="196" cy="90" r="3" fill="currentColor" />
+        </svg>
+      </div>
+
+      <div class="iso-plane plane-2">
+        <div class="plane-header">
+          <span>MEDIA</span>
+          <span>03 — 05</span>
+        </div>
+        <svg class="plane-svg" viewBox="0 0 280 180" fill="none">
+          <polygon points="116,62 116,118 168,90" stroke="#B23A0E" stroke-width="1.1" fill="none" />
+          <circle cx="140" cy="90" r="56" stroke="currentColor" stroke-width="0.75" />
+        </svg>
+      </div>
+
+      <div class="iso-plane plane-3">
+        <div class="plane-header">
+          <span>EXECUTION</span>
+          <span class="accent-label">06 ↗</span>
+        </div>
+        <svg class="plane-svg" viewBox="0 0 280 180" fill="none">
+          <line x1="40" y1="45" x2="240" y2="45" stroke="currentColor" stroke-width="0.6" />
+          <line x1="40" y1="90" x2="240" y2="90" stroke="#B23A0E" stroke-width="1.2" />
+          <line x1="40" y1="135" x2="240" y2="135" stroke="currentColor" stroke-width="0.6" />
+          <circle cx="92" cy="90" r="4" fill="#B23A0E" />
+          <circle cx="188" cy="90" r="4" fill="#17130F" />
+        </svg>
+      </div>
+    </div>
+  )}
+</div>
+
+<style>
+  @keyframes subtleFloat {
+    0%, 100% {
+      transform: rotateX(48deg) rotateZ(-36deg) translateY(0px);
+    }
+    50% {
+      transform: rotateX(46deg) rotateZ(-34deg) translateY(-8px);
+    }
+  }
+
+  .editorial-visual {
+    perspective: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 360px;
+  }
+
+  .iso-stage {
+    position: relative;
+    width: 300px;
+    height: 210px;
+    transform-style: preserve-3d;
+    transform: rotateX(48deg) rotateZ(-36deg);
+    animation: subtleFloat 7s ease-in-out infinite;
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .editorial-visual:hover .iso-stage {
+    animation-play-state: paused;
+    transform: rotateX(42deg) rotateZ(-28deg) scale(1.03);
+  }
+
+  .iso-plane {
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--color-line);
+    background: rgb(245 241 234 / 72%);
+    backdrop-filter: blur(2px);
+    padding: 0.9rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--color-ink);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+  }
+
+  .plane-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--color-muted);
+  }
+
+  .accent-label {
+    color: var(--color-accent);
+  }
+
+  .plane-svg {
+    width: 100%;
+    height: auto;
+    color: var(--color-muted);
+    opacity: 0.85;
+  }
+
+  .plane-1 {
+    transform: translateZ(0px);
+  }
+
+  .plane-2 {
+    transform: translateZ(54px);
+    border-color: rgb(23 19 15 / 22%);
+  }
+
+  .plane-3 {
+    transform: translateZ(108px);
+    border-color: var(--color-accent);
+    background: rgb(245 241 234 / 82%);
+  }
+
+  .editorial-visual:hover .plane-2 {
+    transform: translateZ(72px);
+  }
+
+  .editorial-visual:hover .plane-3 {
+    transform: translateZ(144px);
+  }
+
+  @media (max-width: 900px) {
+    .editorial-visual {
+      min-height: 290px;
+    }
+
+    .iso-stage {
+      width: 250px;
+      height: 175px;
+    }
+  }
+</style>
