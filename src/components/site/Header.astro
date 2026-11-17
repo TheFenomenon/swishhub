@@ -5,11 +5,13 @@ import { site } from "../../data/site";
 
 const currentPath = Astro.url.pathname;
 
-const navigation = [
+
+  const navigation = [
   { label: "Home", href: "/", path: "/" },
   { label: "Services", href: "/services/", path: "/services/" },
+  { label: "Blog", href: "/blog/", path: "/blog/" },
   { label: "About", href: "/about/", path: "/about/" },
-  { label: "Contact", href: "/#contact", path: "" },
+  { label: "Contact", href: "/contact/", path: "/contact/" },
 ];
 ---
 
