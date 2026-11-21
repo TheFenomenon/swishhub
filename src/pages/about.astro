@@ -1,54 +1,115 @@
-
 ---
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/site/Header.astro";
 import Footer from "../components/site/Footer.astro";
-import AboutSection from "../components/sections/AboutSection.astro";
-import ApproachSection from "../components/sections/ApproachSection.astro";
 import { site } from "../data/site";
 ---
 
 <Layout
-  title="About Us"
-  description="Discover the thinking behind SwishHub Interactive Limited and how we bring sales strategy, creativity and technology together."
+  title="About SwishHub Interactive"
+  description="Meet Mever Daveed, Founder & CEO of SwishHub Interactive. Sales-driven web development, editorial design, and digital growth strategies from Nigeria."
 >
   <Header />
 
   <main id="main-content">
-    <section class="about-hero container">
-      <p class="section-label">WHO WE ARE</p>
+    <!-- Section 1: Agency Philosophy & How We Work -->
+    <section class="about-agency container">
+      <div class="about-header">
+        <p class="section-label">ABOUT SWISHHUB INTERACTIVE</p>
+        <h1>Websites built for <em>actual sales</em>, not just aesthetics.</h1>
+        <p class="lead">
+          Too many businesses invest in websites that look like digital brochures instead of revenue engines. We bridge the gap between high-craft editorial design and direct-response sales psychology.
+        </p>
+      </div>
 
-      <h1>
-        We build with
-        <em>business in mind.</em>
-      </h1>
-
-      <p class="about-intro">
-        SwishHub Interactive Limited is built around a simple belief:
-        digital experiences should create value for the businesses
-        behind them and the people they serve.
-      </p>
-
-      <a
-        class="button"
-        href={site.whatsappUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Start a conversation <span aria-hidden="true">↗</span>
-      </a>
+      <div class="values-block">
+        <h2>The Attention → Trust → Action Framework</h2>
+        <div class="values-grid">
+          <div class="value-card">
+            <span>01</span>
+            <h3>Attention First</h3>
+            <p>Every headline and hero section is engineered to clarify your value and capture genuine interest within five seconds.</p>
+          </div>
+          <div class="value-card">
+            <span>02</span>
+            <h3>Uncompromising Trust</h3>
+            <p>Clean editorial typography, clear proof points, and human-centered storytelling replace generic corporate clutter.</p>
+          </div>
+          <div class="value-card">
+            <span>03</span>
+            <h3>Frictionless Action</h3>
+            <p>Every page guides visitors straight to clear conversions—whether through a custom brief or direct WhatsApp chat.</p>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <AboutSection />
-    <ApproachSection />
-
-    <section class="about-belief">
+    <!-- Section 2: Dedicated Founder & CEO Spotlight -->
+    <section class="founder-section">
       <div class="container">
-        <p class="section-label">WHAT GUIDES OUR WORK</p>
-        <h2>
-          The goal isn't to make more digital noise.
-          It's to make every interaction count.
-        </h2>
+        <div class="founder-grid">
+          <!-- Left Column: CEO Portrait Placeholder -->
+          <div class="founder-portrait-wrapper">
+            <div class="portrait-frame" role="img" aria-label="Founder & CEO Portrait Placeholder">
+              <div class="portrait-placeholder">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <span class="placeholder-title">CEO Portrait Placeholder</span>
+                <span class="placeholder-hint">Recommended: 4:5 aspect ratio (e.g. 800×1000px)</span>
+              </div>
+            </div>
+            <div class="portrait-caption">
+              <strong>Mever Daveed</strong>
+              <span>Founder & Chief Executive Officer</span>
+            </div>
+          </div>
+
+          <!-- Right Column: Personal Story -->
+          <div class="founder-story">
+            <p class="section-label">MEET THE FOUNDER</p>
+            <h2>Why a marketer with a decade in sales started coding.</h2>
+
+            <div class="story-paragraphs">
+              <p>
+                SwishHub Interactive was born out of practical frustration. As a sales and marketing professional with over ten years on the front lines, I repeatedly hired web developers who delivered visually polished sites that completely failed to convert visitors or close deals. Eventually, I decided to learn how to build them properly myself.
+              </p>
+              <p>
+                My foundation began in storytelling and audience psychology as a graduate of Mass Communication from <strong>Ahmadu Bello University (ABU), Zaria</strong>, followed by hands-on film-making training at the <strong>Nigerian Film Institute, Jos</strong>. That background taught me how visual rhythm, narrative framing, and human emotion drive real-world decisions.
+              </p>
+              <p>
+                Today, I operate as a hands-on builder and <strong>"vibe coder"</strong>—combining modern AI engineering with lean, high-craft web stacks to ship blazing-fast websites built specifically around conversion. I am an avid believer that practical tech and digital skills are the single strongest lever for business growth in Africa.
+              </p>
+            </div>
+
+            <div class="founder-credentials">
+              <div class="cred-item">
+                <span class="cred-label">EDUCATION</span>
+                <span class="cred-value">Mass Communication, ABU Zaria</span>
+              </div>
+              <div class="cred-item">
+                <span class="cred-label">VISUAL TRAINING</span>
+                <span class="cred-value">Nigerian Film Institute, Jos</span>
+              </div>
+              <div class="cred-item">
+                <span class="cred-label">TRACK RECORD</span>
+                <span class="cred-value">10+ Years in Sales & Marketing</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Bottom Conversion Callout -->
+    <section class="about-cta container">
+      <div class="founder-cta">
+        <h2>Let's build something exceptional together.</h2>
+        <p>Skip the agency fluff. Let's talk directly about your business goals and how we can engineer a website that actually sells.</p>
+        <a href={site.whatsappUrl} target="_blank" rel="noopener noreferrer" class="button">
+          Chat directly with Mever via WhatsApp <span>↗</span>
+        </a>
       </div>
     </section>
   </main>
@@ -57,37 +118,246 @@ import { site } from "../data/site";
 </Layout>
 
 <style>
-  .about-hero {
-    padding-block: clamp(6rem, 13vw, 11rem);
+  .about-agency {
+    padding-block: clamp(4rem, 8vw, 7rem);
   }
 
-  .about-hero h1 {
-    max-width: 1000px;
-    margin-bottom: 2rem;
-    font-size: var(--text-display);
-    letter-spacing: -0.065em;
+  .about-header {
+    max-width: 820px;
+    margin-bottom: 4.5rem;
   }
 
-  .about-hero h1 em {
-    display: block;
+  .about-header h1 {
+    font-size: clamp(2.4rem, 4.8vw, 4rem);
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    margin-block: 1rem 1.5rem;
+  }
+
+  .about-header h1 em {
     color: var(--color-accent);
     font-weight: 400;
   }
 
-  .about-intro {
-    max-width: 680px;
-    margin-bottom: 2.5rem;
-    font-size: clamp(1.1rem, 2vw, 1.35rem);
+  .lead {
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
+    color: var(--color-muted);
+    line-height: 1.65;
   }
 
-  .about-belief {
-    padding-block: clamp(5rem, 10vw, 9rem);
+  .values-block h2 {
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
+  }
+
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .value-card {
     background: var(--color-paper-deep);
+    border: 1px solid var(--color-line);
+    padding: 2.25rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
   }
 
-  .about-belief h2 {
-    max-width: 950px;
-    margin-bottom: 0;
-    font-size: clamp(2.5rem, 5.5vw, 5rem);
+  .value-card span {
+    font-family: var(--font-heading);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: var(--color-accent);
+    letter-spacing: 0.1em;
+  }
+
+  .value-card h3 {
+    font-size: 1.3rem;
+    margin: 0;
+  }
+
+  .value-card p {
+    font-size: 0.95rem;
+    color: var(--color-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .founder-section {
+    background: var(--color-paper-deep);
+    border-block: 1px solid var(--color-line);
+    padding-block: clamp(4.5rem, 8vw, 7.5rem);
+  }
+
+  .founder-grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: clamp(2.5rem, 6vw, 5.5rem);
+    align-items: start;
+  }
+
+  .founder-portrait-wrapper {
+    position: sticky;
+    top: 7rem;
+  }
+
+  .portrait-frame {
+    aspect-ratio: 4 / 5;
+    width: 100%;
+    background: var(--color-paper);
+    border: 1px solid var(--color-line);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .portrait-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    color: var(--color-muted);
+    gap: 0.75rem;
+    width: 100%;
+    height: 100%;
+    border: 1px dashed var(--color-line);
+    margin: 1rem;
+  }
+
+  .placeholder-title {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-ink);
+  }
+
+  .placeholder-hint {
+    font-size: 0.8rem;
+    max-width: 220px;
+    line-height: 1.4;
+  }
+
+  .portrait-caption {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-line);
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .portrait-caption strong {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: var(--color-ink);
+  }
+
+  .portrait-caption span {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  .founder-story h2 {
+    font-size: clamp(2rem, 3.6vw, 2.85rem);
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    margin-block: 0.75rem 1.75rem;
+  }
+
+  .story-paragraphs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .story-paragraphs p {
+    font-size: 1.08rem;
+    color: var(--color-muted);
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  .story-paragraphs strong {
+    color: var(--color-ink);
+  }
+
+  .founder-credentials {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .cred-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .cred-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+  }
+
+  .cred-value {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--color-ink);
+    line-height: 1.4;
+  }
+
+  .about-cta {
+    padding-block: clamp(4rem, 7vw, 6.5rem);
+  }
+
+  .founder-cta {
+    background: var(--color-paper-deep);
+    border: 1px solid var(--color-line);
+    padding: clamp(3rem, 5vw, 4.5rem);
+    text-align: center;
+    max-width: 820px;
+    margin-inline: auto;
+  }
+
+  .founder-cta h2 {
+    font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+    margin-bottom: 1rem;
+    letter-spacing: -0.03em;
+  }
+
+  .founder-cta p {
+    font-size: 1.08rem;
+    color: var(--color-muted);
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 900px) {
+    .values-grid,
+    .founder-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .founder-portrait-wrapper {
+      position: static;
+      max-width: 420px;
+    }
+
+    .founder-credentials {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
   }
 </style>

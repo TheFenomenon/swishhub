@@ -1,0 +1,222 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/site/Header.astro";
+import Footer from "../../components/site/Footer.astro";
+import { projects, type CaseStudy } from "../../data/projects";
+import { site } from "../../data/site";
+
+export async function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: CaseStudy;
+}
+
+const { project } = Astro.props;
+
+const whatsappInquiryUrl = `${site.whatsappUrl}?text=${encodeURIComponent(
+  `Hello SwishHub, I just read the "${project.title}" case study and would like to discuss a similar project.`
+)}`;
+---
+
+<Layout title={project.title} description={project.summary}>
+  <Header />
+
+  <main id="main-content">
+    <article class="case-study container">
+      <a href="/work/" class="back-link">← All Case Studies</a>
+
+      <header class="case-header">
+        <div class="case-meta">
+          <span class="case-cat">{project.category}</span>
+          <span>•</span>
+          <span>{project.location}</span>
+        </div>
+        <h1>{project.title}</h1>
+        <p class="case-client">Client / Context: <strong>{project.client}</strong></p>
+        <p class="case-lead">{project.summary}</p>
+      </header>
+
+      <div class="case-body">
+        <section class="case-block">
+          <h2>The Challenge</h2>
+          <p>{project.problem}</p>
+        </section>
+
+        <section class="case-block">
+          <h2>Our Approach</h2>
+          <p>{project.approach}</p>
+        </section>
+
+        <section class="case-block">
+          <h2>The Result</h2>
+          <p>{project.outcome}</p>
+        </section>
+
+        <section class="case-block">
+          <h2>Key Deliverables</h2>
+          <ul class="deliverables-grid">
+            {project.deliverables.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </section>
+      </div>
+
+      <footer class="case-footer">
+        <h3>Building something similar?</h3>
+        <p>Let's talk through your goals, timeline, and the right scope for your business.</p>
+        <div class="footer-actions">
+          <a href={whatsappInquiryUrl} target="_blank" rel="noopener noreferrer" class="button">
+            Discuss a Similar Project on WhatsApp <span>↗</span>
+          </a>
+          <a href="/contact/" class="button button-outline">Fill Out Project Brief</a>
+        </div>
+      </footer>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .case-study {
+    max-width: 820px;
+    padding-block: clamp(3.5rem, 7vw, 6.5rem);
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--color-muted);
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    color: var(--color-accent);
+  }
+
+  .case-header {
+    padding-bottom: 2.5rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .case-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--color-muted);
+    margin-bottom: 1rem;
+  }
+
+  .case-cat {
+    color: var(--color-accent);
+  }
+
+  .case-header h1 {
+    font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.85rem;
+  }
+
+  .case-client {
+    color: var(--color-muted);
+    margin-bottom: 1.25rem;
+  }
+
+  .case-client strong {
+    color: var(--color-ink);
+  }
+
+  .case-lead {
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  .case-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .case-block h2 {
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+
+  .case-block p {
+    font-size: 1.08rem;
+    line-height: 1.75;
+    color: var(--color-ink);
+    margin: 0;
+  }
+
+  .deliverables-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem;
+  }
+
+  .deliverables-grid li {
+    padding: 0.9rem 1rem;
+    background: var(--color-paper-deep);
+    border: 1px solid var(--color-line);
+    font-size: 0.95rem;
+    color: var(--color-ink);
+  }
+
+  .case-footer {
+    margin-top: 4rem;
+    padding: clamp(2rem, 4vw, 3rem);
+    background: var(--color-paper-deep);
+    border: 1px solid var(--color-line);
+  }
+
+  .case-footer h3 {
+    font-size: 1.6rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .case-footer p {
+    color: var(--color-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .button-outline {
+    background: transparent !important;
+    color: var(--color-ink) !important;
+    border: 1px solid var(--color-line) !important;
+  }
+
+  .button-outline:hover {
+    border-color: var(--color-accent) !important;
+    color: var(--color-accent) !important;
+  }
+
+  @media (max-width: 640px) {
+    .deliverables-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

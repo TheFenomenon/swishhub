@@ -1,137 +1,411 @@
-export interface PricedDeliverable {
+export interface ServiceAddon {
   id: string;
   label: string;
-  price: number;
-  includedByDefault?: boolean;
-}
-
-export interface Service {
-  slug: string;
-  number: string;
-  category: string;
-  title: string;
   description: string;
-  longDescription: string;
-  basePrice: number;
-  pricedDeliverables: PricedDeliverable[];
-  approach: string;
+  price: number;
+  billing?: "one-time" | "monthly";
+  category: string;
 }
 
-export const services: Service[] = [
+export interface ServiceItem {
+  slug: string;
+  title: string;
+  tagline: string;
+  description: string;
+  basePrice: number;
+  addons: ServiceAddon[];
+}
+
+export const services: ServiceItem[] = [
   {
-    slug: "web-design-and-development",
-    number: "01",
-    category: "DIGITAL FOUNDATIONS",
-    title: "Web design & development",
+    slug: "web-development",
+    title: "Web Development",
+    tagline: "Fast, conversion-focused websites built to turn visitors into paying customers.",
     description:
-      "Business websites and landing pages designed to communicate your value, build credibility and guide visitors towards taking action.",
-    longDescription:
-      "We don't build generic software or bloated templates. We engineer fast, conversion-led static and dynamic web experiences that establish instant authority and make your next step obvious.",
-    basePrice: 150000,
-    pricedDeliverables: [
-      { id: "ui_ux", label: "Custom mobile-first UI/UX architecture", price: 50000, includedByDefault: true },
-      { id: "typography", label: "High-contrast editorial typography & brand tokens", price: 30000, includedByDefault: true },
-      { id: "performance", label: "Performance-optimised static build & hosting setup", price: 40000, includedByDefault: true },
-      { id: "seo", label: "Technical SEO structure, sitemaps & metadata", price: 35000, includedByDefault: false },
-      { id: "cms", label: "CMS integration or custom dynamic data handling", price: 75000, includedByDefault: false },
-      { id: "whatsapp_funnel", label: "Advanced WhatsApp lead capture & booking funnel", price: 45000, includedByDefault: true }
+      "Start with a solid website foundation, then select only the one-time features or monthly care options your business needs.",
+    basePrice: 50000,
+    addons: [
+      // 1. Foundation & Infrastructure
+      {
+        id: "domain-name",
+        label: "Domain Name Setup (.com.ng / .com)",
+        description: "Domain registration, DNS configuration, and connection to your site.",
+        price: 15000,
+        billing: "one-time",
+        category: "Foundation & Infrastructure",
+      },
+      {
+        id: "web-hosting",
+        label: "Website Hosting Setup",
+        description: "Reliable hosting configuration so your site stays fast and online.",
+        price: 25000,
+        billing: "one-time",
+        category: "Foundation & Infrastructure",
+      },
+      {
+        id: "mobile-responsiveness",
+        label: "Mobile Responsiveness Audit & Polish",
+        description: "Ensure layouts, buttons, and typography work smoothly across phones, tablets, and desktops.",
+        price: 60000,
+        billing: "one-time",
+        category: "Foundation & Infrastructure",
+      },
+
+      // 2. Performance, Redesign & Migration
+      {
+        id: "website-redesign",
+        label: "Website Redesign",
+        description: "Transform an outdated website into a modern, credible, conversion-focused experience.",
+        price: 150000,
+        billing: "one-time",
+        category: "Performance, Redesign & Migration",
+      },
+      {
+        id: "website-migration",
+        label: "Website Migration",
+        description: "Move an existing website cleanly between hosting providers or platforms with zero downtime.",
+        price: 25000,
+        billing: "one-time",
+        category: "Performance, Redesign & Migration",
+      },
+      {
+        id: "speed-optimisation",
+        label: "Website Speed Optimisation",
+        description: "Compress assets, streamline scripts, and improve loading speed and performance.",
+        price: 20000,
+        billing: "one-time",
+        category: "Performance, Redesign & Migration",
+      },
+      {
+        id: "website-security",
+        label: "Website Security & SSL",
+        description: "SSL configuration, hardening, updates, and practical protection practices.",
+        price: 20000,
+        billing: "one-time",
+        category: "Performance, Redesign & Migration",
+      },
+      {
+        id: "website-maintenance",
+        label: "Website Maintenance",
+        description: "Regular updates, backups, troubleshooting, and ongoing technical support.",
+        price: 20000,
+        billing: "monthly",
+        category: "Performance, Redesign & Migration",
+      },
+
+      // 3. Growth, SEO & Tracking
+      {
+        id: "seo-setup",
+        label: "Search Engine Optimisation (SEO)",
+        description: "Clean metadata, semantic headings, indexable structure, and search visibility setup.",
+        price: 70000,
+        billing: "one-time",
+        category: "Growth, SEO & Tracking",
+      },
+      {
+        id: "analytics-tracking",
+        label: "Google Analytics & Visitor Tracking",
+        description: "Track traffic sources, visitor behavior, and key conversion actions.",
+        price: 15000,
+        billing: "one-time",
+        category: "Growth, SEO & Tracking",
+      },
+
+      // 4. Conversions & Integrations
+      {
+        id: "whatsapp-integration",
+        label: "WhatsApp Integration",
+        description: "Direct chat buttons, pre-filled inquiry messages, and quick-response handoffs.",
+        price: 10000,
+        billing: "one-time",
+        category: "Conversions & Integrations",
+      },
+      {
+        id: "contact-enquiry-forms",
+        label: "Contact & Enquiry Forms",
+        description: "Structured lead capture and project inquiry forms tailored to your sales process.",
+        price: 12000,
+        billing: "one-time",
+        category: "Conversions & Integrations",
+      },
+      {
+        id: "online-payment-integration",
+        label: "Online Payment Integration",
+        description: "Accept card, bank transfer, and checkout payments seamlessly on your site.",
+        price: 120000,
+        billing: "one-time",
+        category: "Conversions & Integrations",
+      },
+      {
+        id: "live-chat-integration",
+        label: "Live Chat Integration",
+        description: "Interactive chat widget to answer questions and guide visitors in real time.",
+        price: 55000,
+        billing: "one-time",
+        category: "Conversions & Integrations",
+      },
+      {
+        id: "booking-appointment-system",
+        label: "Booking & Appointment Systems",
+        description: "Let clients pick slots, schedule consultations, or book sessions directly.",
+        price: 70000,
+        billing: "one-time",
+        category: "Conversions & Integrations",
+      },
+      {
+        id: "email-marketing-integration",
+        label: "Email Marketing Integration",
+        description: "Connect forms and triggers to your email marketing list or automation tool.",
+        price: 20000,
+        billing: "one-time",
+        category: "Conversions & Integrations",
+      },
+      {
+        id: "newsletter-subscriptions",
+        label: "Newsletter Subscriptions",
+        description: "Dedicated signup flows to capture and grow recurring audience subscribers.",
+        price: 12000,
+        billing: "one-time",
+        category: "Conversions & Integrations",
+      },
+      {
+        id: "social-media-integration",
+        label: "Social Media Integration",
+        description: "Connect social profiles, share links, and embed relevant social proof.",
+        price: 10000,
+        billing: "one-time",
+        category: "Conversions & Integrations",
+      },
+
+      // 5. Content & Account Systems
+      {
+        id: "blog-cms",
+        label: "Blog & Content Management Systems",
+        description: "Publish articles, announcements, and case studies easily without touching code.",
+        price: 120000,
+        billing: "one-time",
+        category: "Content & Account Systems",
+      },
+      {
+        id: "admin-dashboard-cms",
+        label: "Admin Dashboards & Content Management",
+        description: "Manage site content, entries, or operational records from a dedicated admin view.",
+        price: 55000,
+        billing: "one-time",
+        category: "Content & Account Systems",
+      },
+      {
+        id: "customer-login-registration",
+        label: "Customer Login & Registration",
+        description: "Account sign-up, sign-in, and member access flows for returning users.",
+        price: 45000,
+        billing: "one-time",
+        category: "Content & Account Systems",
+      },
     ],
-    approach:
-      "Every layout is built with intention—prioritizing speed, clear hierarchy, and an unwavering focus on what your visitors need to see before they take action.",
   },
   {
-    slug: "content-writing",
-    number: "02",
-    category: "STRATEGIC COMMUNICATION",
-    title: "Content writing",
+    slug: "digital-marketing",
+    title: "Digital Marketing & Lead Generation",
+    tagline: "Targeted campaigns and conversion funnels built to bring qualified buyers to your offer.",
     description:
-      "Clear, persuasive content that helps people understand your offer, connect with your message and make informed decisions.",
-    longDescription:
-      "Words either clarify or confuse. We write sharp, commercially aware copy that strips away corporate fluff and communicates your exact value proposition with human clarity.",
-    basePrice: 80000,
-    pricedDeliverables: [
-      { id: "messaging", label: "Core website messaging & value proposition copy", price: 40000, includedByDefault: true },
-      { id: "landing_copy", label: "High-converting landing page sales copy", price: 45000, includedByDefault: true },
-      { id: "profile", label: "Company profile & professional executive pitch deck", price: 50000, includedByDefault: false },
-      { id: "blog_pack", label: "SEO-driven editorial article pack (4 posts)", price: 60000, includedByDefault: false }
+      "Stop boosting posts blindly. Build campaigns around clear audience targeting, direct-response messaging, and measurable lead flow.",
+    basePrice: 40000,
+    addons: [
+      {
+        id: "funnel-audit-strategy",
+        label: "Offer & Funnel Conversion Audit",
+        description: "Review your current landing page, messaging, and WhatsApp/form handoff for leaks.",
+        price: 25000,
+        billing: "one-time",
+        category: "Strategy & Setup",
+      },
+      {
+        id: "ad-creative-copy-pack",
+        label: "Ad Creative & Hook Copy Pack",
+        description: "Scroll-stopping ad angles, headlines, and primary copy tailored to your target buyer.",
+        price: 30000,
+        billing: "one-time",
+        category: "Strategy & Setup",
+      },
+      {
+        id: "monthly-campaign-management",
+        label: "Monthly Campaign Management",
+        description: "Ongoing audience testing, optimization, and weekly performance reporting (ad spend separate).",
+        price: 45000,
+        billing: "monthly",
+        category: "Ongoing Execution",
+      },
     ],
-    approach:
-      "We focus on what your customers are actually thinking, answering their objections and guiding them naturally toward your solution.",
+  },
+  {
+    slug: "content-writing-ghostwriting",
+    title: "Content Writing & Ghostwriting",
+    tagline: "Sharp editorial articles, sales copy, and executive content written in your voice.",
+    description:
+      "Turn raw ideas, expertise, or long-form manuscripts into clear, persuasive writing that builds authority and drives action.",
+    basePrice: 30000,
+    addons: [
+      {
+        id: "content-volume-light",
+        label: "Light Content Volume (2–4 posts/week)",
+        description: "Steady weekly publishing cadence (~8–16 posts/month) for consistent visibility without overwhelm.",
+        price: 35000,
+        billing: "monthly",
+        category: "Publishing Cadence & Volume",
+      },
+      {
+        id: "content-volume-medium",
+        label: "Medium Content Volume (6–8 posts/week)",
+        description: "Higher-frequency weekly publishing (~24–32 posts/month) to build stronger reach and authority.",
+        price: 65000,
+        billing: "monthly",
+        category: "Publishing Cadence & Volume",
+      },
+      {
+        id: "content-volume-high",
+        label: "High Content Volume (12 posts/week)",
+        description: "Aggressive multi-post weekly output (~48 posts/month) for rapid audience growth and campaigns.",
+        price: 110000,
+        billing: "monthly",
+        category: "Publishing Cadence & Volume",
+      },
+      {
+        id: "website-sales-copy",
+        label: "Landing Page & Sales Copy Rewrite",
+        description: "Clarify headlines, value propositions, proof blocks, and calls-to-action across key pages.",
+        price: 45000,
+        billing: "one-time",
+        category: "Conversion Copywriting",
+      },
+      {
+        id: "lead-magnet-compression",
+        label: "Executive Lead Magnet / Book Compression",
+        description: "Distill dense books, notes, or frameworks into a sharp, readable lead-magnet asset.",
+        price: 65000,
+        billing: "one-time",
+        category: "Long-Form & Authority",
+      },
+    ],
   },
   {
     slug: "social-media-management",
-    number: "03",
-    category: "BRAND VISIBILITY",
-    title: "Social media management",
+    title: "Social Media Management",
+    tagline: "Consistent, intentional publishing that grows audience trust and turns followers into leads.",
     description:
-      "Strategic content planning and social media management that help businesses stay visible, communicate consistently and build meaningful audience relationships.",
-    longDescription:
-      "Consistency beats erratic bursts of posting. We help growing brands structure their social presence, plan engaging content calendars, and maintain active authority across platforms.",
-    basePrice: 90000,
-    pricedDeliverables: [
-      { id: "strategy", label: "Monthly content strategy & editorial calendar", price: 30000, includedByDefault: true },
-      { id: "optimization", label: "Platform optimization & profile branding refresh", price: 25000, includedByDefault: true },
-      { id: "content_creation", label: "Copywriting & asset scheduling (15 posts/mo)", price: 50000, includedByDefault: true },
-      { id: "growth_framework", label: "Audience engagement & organic growth framework", price: 35000, includedByDefault: false }
+      "Show up reliably with structured content pillars, clear messaging, and conversion paths instead of random posting.",
+    basePrice: 35000,
+    addons: [
+      {
+        id: "profile-bio-revamp",
+        label: "Profile & Bio Conversion Optimisation",
+        description: "Sharpen your bio, pinned highlights, and profile links so visitors immediately get what you do.",
+        price: 20000,
+        billing: "one-time",
+        category: "Setup & Positioning",
+      },
+      {
+        id: "monthly-content-calendar",
+        label: "Monthly Content Calendar & Scheduling",
+        description: "Planned posts, captions, and consistent scheduling across your primary social channels.",
+        price: 40000,
+        billing: "monthly",
+        category: "Monthly Management",
+      },
     ],
-    approach:
-      "We design social systems that keep your brand top-of-mind without resorting to gimmicks or empty vanity metrics.",
   },
   {
-    slug: "youtube-optimisation-and-automation",
-    number: "04",
-    category: "VIDEO & DISCOVERY",
-    title: "YouTube optimisation & automation",
+    slug: "youtube-management-monetization",
+    title: "YouTube Channel Management & Monetization",
+    tagline: "End-to-end channel structure, packaging, and growth strategy built for watch time and revenue.",
     description:
-      "Channel optimisation, content organisation and practical automation to improve how your YouTube presence works.",
-    longDescription:
-      "YouTube is the world's second-largest search engine. We help you structure your channel, optimize discoverability, and streamline your video workflows to turn views into business leverage.",
-    basePrice: 120000,
-    pricedDeliverables: [
-      { id: "architecture", label: "Channel architecture & playlist organization", price: 40000, includedByDefault: true },
-      { id: "metadata_audit", label: "Metadata, tags & search visibility audit", price: 35000, includedByDefault: true },
-      { id: "workflow_auto", label: "Workflow automation for publishing & asset management", price: 55000, includedByDefault: false },
-      { id: "thumbnail_strat", label: "Thumbnail & high-click title strategy consultation", price: 30000, includedByDefault: true }
+      "Structure your channel, titles, thumbnails direction, and retention flow so viewers stick around and subscribe.",
+    basePrice: 45000,
+    addons: [
+      {
+        id: "channel-audit-roadmap",
+        label: "Channel Audit & Monetization Roadmap",
+        description: "Actionable review of niche positioning, video topics, retention bottlenecks, and growth steps.",
+        price: 30000,
+        billing: "one-time",
+        category: "Channel Strategy",
+      },
+      {
+        id: "script-title-packaging",
+        label: "Video Scripting, Titles & Packaging Pack",
+        description: "High-retention video scripts, hook openings, and clickable title/thumbnail concepts.",
+        price: 35000,
+        billing: "one-time",
+        category: "Production & Growth",
+      },
+      {
+        id: "monthly-channel-management",
+        label: "Monthly Channel Optimisation & Publishing",
+        description: "Ongoing upload optimization, metadata, descriptions, and growth tracking.",
+        price: 50000,
+        billing: "monthly",
+        category: "Production & Growth",
+      },
     ],
-    approach:
-      "We turn chaotic video libraries into searchable, authoritative assets that work for your business around the clock.",
   },
   {
-    slug: "ai-assisted-video-content",
-    number: "05",
-    category: "DIGITAL CREATIVE PRODUCTION",
-    title: "AI-assisted video content",
+    slug: "ai-video-production",
+    title: "AI-Assisted Video Production",
+    tagline: "Fast, expressive visual storytelling and promo videos powered by modern AI workflows.",
     description:
-      "Creative video production using AI-assisted tools and human direction to develop engaging visual content for businesses.",
-    longDescription:
-      "Leveraging cutting-edge AI production pipelines combined with disciplined human editing, we create commercial video assets, social clips, and promotional promos at a fraction of traditional agency overhead.",
-    basePrice: 130000,
-    pricedDeliverables: [
-      { id: "ai_scripts", label: "AI-assisted commercial video scripts & storyboards", price: 35000, includedByDefault: true },
-      { id: "vertical_ads", label: "Vertical cinematic commercials & ad reels (3 videos)", price: 75000, includedByDefault: true },
-      { id: "voiceover", label: "Synthetic professional voiceovers & audio integration", price: 30000, includedByDefault: false },
-      { id: "grading", label: "Post-production polish & brand grading", price: 25000, includedByDefault: true }
+      "Combine narrative direction with AI video generation and editing to produce clean promos, explainers, and visual assets quickly.",
+    basePrice: 40000,
+    addons: [
+      {
+        id: "script-storyboard-deck",
+        label: "Script & Visual Storyboard",
+        description: "Scene-by-scene script, voiceover direction, and visual prompt plan before rendering.",
+        price: 20000,
+        billing: "one-time",
+        category: "Pre-Production",
+      },
+      {
+        id: "extra-video-cut",
+        label: "Additional Short-Form / Social Cut",
+        description: "Adapted vertical or cut-down versions tailored for reels, shorts, or ads.",
+        price: 25000,
+        billing: "one-time",
+        category: "Deliverables",
+      },
     ],
-    approach:
-      "Technology accelerates production, but human taste and commercial awareness dictate the final result.",
   },
   {
-    slug: "custom-t-shirts-and-stationery",
-    number: "06",
-    category: "PRINT & BRAND MATERIALS",
-    title: "Custom T-shirts & stationery",
+    slug: "sales-coaching",
+    title: "Sales Coaching & Conversion Strategy",
+    tagline: "Practical sales scripts, offer framing, and closing systems drawn from 10+ years in the trenches.",
     description:
-      "Custom-printed T-shirts, stationery and practical branded materials for businesses, organisations and special projects.",
-    longDescription:
-      "Physical touchpoints matter. Whether custom apparel for a corporate team or premium stationery for executive meetings, we produce tangible brand assets that look sharp and feel premium.",
-    basePrice: 70000,
-    pricedDeliverables: [
-      { id: "apparel_print", label: "Custom typography-led apparel printing (Batch setup)", price: 40000, includedByDefault: true },
-      { id: "stationery", label: "Corporate stationery, notebooks & packaging design", price: 45000, includedByDefault: true },
-      { id: "merchandise", label: "Event merchandise & promotional materials pack", price: 50000, includedByDefault: false },
-      { id: "material_audit", label: "Material quality audit & production prep", price: 20000, includedByDefault: true }
+      "Fix slow follow-ups, weak offers, and stalled WhatsApp/DM conversations with clear frameworks your team can execute daily.",
+    basePrice: 50000,
+    addons: [
+      {
+        id: "sales-script-playbook",
+        label: "DM / WhatsApp Closing Script & Objection Playbook",
+        description: "Step-by-step conversation flows and responses for common price and timing objections.",
+        price: 35000,
+        billing: "one-time",
+        category: "Sales Assets",
+      },
+      {
+        id: "one-on-one-strategy-session",
+        label: "1-on-1 Live Sales & Offer Intensive",
+        description: "Focused working session dissecting your current offer, pipeline, and closing bottlenecks.",
+        price: 40000,
+        billing: "one-time",
+        category: "Coaching",
+      },
+      {
+        id: "monthly-sales-advisory",
+        label: "Monthly Sales & Conversion Advisory",
+        description: "Ongoing weekly check-ins, script reviews, and pipeline accountability.",
+        price: 60000,
+        billing: "monthly",
+        category: "Coaching",
+      },
     ],
-    approach:
-      "Clean design translates seamlessly from digital screens onto premium fabrics and paper stocks.",
   },
 ];

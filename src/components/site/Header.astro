@@ -5,16 +5,15 @@ import { site } from "../../data/site";
 
 const currentPath = Astro.url.pathname;
 
-
-  const navigation = [
+const navigation = [
   { label: "Home", href: "/", path: "/" },
   { label: "Services", href: "/services/", path: "/services/" },
+  { label: "Work", href: "/work/", path: "/work/" },
   { label: "Blog", href: "/blog/", path: "/blog/" },
   { label: "About", href: "/about/", path: "/about/" },
   { label: "Contact", href: "/contact/", path: "/contact/" },
 ];
 ---
-
 <header class="site-header" id="site-header">
   <div class="header-inner container">
     <a class="brand" href="/" aria-label="SwishHub home">
