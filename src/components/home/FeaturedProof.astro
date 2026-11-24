@@ -1,0 +1,199 @@
+---
+import { projects } from "../../data/projects";
+import { posts } from "../../data/posts";
+
+const featuredProjects = projects.slice(0, 2);
+const latestPosts = posts.slice(0, 2);
+---
+
+<section class="proof-section container">
+  <div class="proof-block">
+    <div class="block-header">
+      <div>
+        <p class="section-label">SELECTED WORK</p>
+        <h2>Systems built to <em>convert</em>, not just decorate.</h2>
+      </div>
+      <a href="/work/" class="view-all">View all case studies <span>↗</span></a>
+    </div>
+
+    <div class="proof-grid">
+      {featuredProjects.map((project, index) => (
+        <article class="proof-card">
+          <div class="card-meta">
+            <span class="accent">0{index + 1}</span>
+            <span>•</span>
+            <span>{project.category}</span>
+          </div>
+          <h3>
+            <a href={`/work/${project.slug}/`}>{project.title}</a>
+          </h3>
+          <p>{project.summary}</p>
+          <a href={`/work/${project.slug}/`} class="card-link">
+            Read case study <span>→</span>
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+
+  <div class="proof-block insights-block">
+    <div class="block-header">
+      <div>
+        <p class="section-label">EDITORIAL & INSIGHTS</p>
+        <h2>Notes on websites, sales, and digital growth.</h2>
+      </div>
+      <a href="/blog/" class="view-all">Read all articles <span>↗</span></a>
+    </div>
+
+    <div class="proof-grid">
+      {latestPosts.map((post) => (
+        <article class="proof-card">
+          <div class="card-meta">
+            <span class="accent">{post.category}</span>
+            <span>•</span>
+            <span>{post.readTime}</span>
+          </div>
+          <h3>
+            <a href={`/blog/${post.slug}/`}>{post.title}</a>
+          </h3>
+          <p>{post.excerpt}</p>
+          <a href={`/blog/${post.slug}/`} class="card-link">
+            Read article <span>→</span>
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .proof-section {
+    padding-block: clamp(4rem, 7vw, 6.5rem);
+    border-top: 1px solid var(--color-line);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(4rem, 7vw, 6rem);
+  }
+
+  .block-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .block-header h2 {
+    font-size: clamp(1.9rem, 3.5vw, 2.75rem);
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    margin-top: 0.65rem;
+    max-width: 620px;
+  }
+
+  .block-header h2 em {
+    color: var(--color-accent);
+    font-weight: 400;
+  }
+
+  .view-all {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-ink);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .view-all:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+
+  .proof-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .proof-card {
+    background: var(--color-paper-deep);
+    border: 1px solid var(--color-line);
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: border-color var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .proof-card:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+    margin-bottom: 0.9rem;
+  }
+
+  .accent {
+    color: var(--color-accent);
+  }
+
+  .proof-card h3 {
+    font-size: clamp(1.35rem, 2.2vw, 1.7rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.85rem;
+  }
+
+  .proof-card h3 a {
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  .proof-card h3 a:hover {
+    color: var(--color-accent);
+  }
+
+  .proof-card p {
+    color: var(--color-muted);
+    line-height: 1.65;
+    font-size: 0.98rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-link {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--color-ink);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: auto;
+  }
+
+  .card-link:hover {
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 768px) {
+    .proof-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

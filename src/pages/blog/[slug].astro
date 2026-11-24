@@ -2,134 +2,236 @@
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/site/Header.astro";
 import Footer from "../../components/site/Footer.astro";
-import { blogPosts, type BlogPost } from "../../data/posts";
+import { getPublishedPosts } from "../../lib/blog-data";
 import { site } from "../../data/site";
 
-export async function getStaticPaths() {
-  return blogPosts.map((post) => ({
-    params: { slug: post.slug },
-    props: { post },
-  }));
+export const prerender = false;
+
+const { slug } = Astro.params;
+const allPosts = await getPublishedPosts();
+const post = allPosts.find((item) => item.slug === slug);
+
+if (!post) {
+  Astro.response.status = 404;
 }
 
-interface Props {
-  post: BlogPost;
+function parseBlocks(raw: string) {
+  return raw
+    .split(/\n\s*\n/)
+    .map((block) => block.trim())
+    .filter(Boolean)
+    .map((block) => {
+      if (block.startsWith("## ")) {
+        return { type: "h2" as const, text: block.replace(/^##\s+/, "") };
+      }
+      if (block.startsWith("### ")) {
+        return { type: "h3" as const, text: block.replace(/^###\s+/, "") };
+      }
+      const lines = block.split("\n").map((l) => l.trim());
+      if (lines.every((l) => l.startsWith("- ") || l.startsWith("* "))) {
+        return {
+          type: "ul" as const,
+          items: lines.map((l) => l.replace(/^[-*]\s+/, "")),
+        };
+      }
+      return { type: "p" as const, text: block.replace(/\n/g, " ") };
+    });
 }
 
-const { post } = Astro.props;
+const blocks = post ? parseBlocks(post.content) : [];
+
+const whatsappUrl = post
+  ? `${site.whatsappUrl}?text=${encodeURIComponent(
+      `Hello SwishHub, I just read "${post.title}" and would like to discuss how it applies to my business.`
+    )}`
+  : site.whatsappUrl;
 ---
 
-<Layout title={post.title} description={post.description}>
+<Layout
+  title={post ? `${post.title} — SwishHub Blog` : "Article Not Found — SwishHub"}
+  description={post ? post.excerpt : "This article could not be found."}
+>
   <Header />
 
   <main id="main-content">
-    <article class="blog-post container">
-      <header class="post-header">
-        <div class="post-meta">
-          <span class="post-category">{post.category}</span>
-          <span>•</span>
-          <span>{post.date}</span>
-          <span>•</span>
-          <span>{post.readTime}</span>
-        </div>
-        <h1>{post.title}</h1>
-        <p class="post-lead">{post.description}</p>
-      </header>
+    {!post ? (
+      <section class="article-wrap container">
+        <p class="section-label">404</p>
+        <h1>Article not found</h1>
+        <p class="article-lead">
+          The post you're looking for may have been moved or removed.
+        </p>
+        <a href="/blog/" class="button">← Back to Blog</a>
+      </section>
+    ) : (
+      <article class="article-wrap container">
+        <a href="/blog/" class="back-link">← All Articles</a>
 
-      <div class="post-body">
-        {post.content.map((paragraph) => (
-          <p>{paragraph}</p>
-        ))}
-      </div>
+        <header class="article-header">
+          <div class="article-meta">
+            <span class="article-cat">{post.category}</span>
+            <span>•</span>
+            <span>{post.dateLabel}</span>
+            <span>•</span>
+            <span>{post.readTime}</span>
+          </div>
+          <h1>{post.title}</h1>
+          <p class="article-lead">{post.excerpt}</p>
+        </header>
 
-      <footer class="post-footer">
-        <div class="author-box">
-          <h3>SwishHub Interactive</h3>
-          <p>We build digital experiences that move business forward. Let's discuss your next project.</p>
-          <a href={site.whatsappUrl} target="_blank" rel="noopener noreferrer" class="button">
-            Start a conversation via WhatsApp <span>↗</span>
-          </a>
+        <div class="article-body">
+          {blocks.map((block) => {
+            if (block.type === "h2") return <h2>{block.text}</h2>;
+            if (block.type === "h3") return <h3>{block.text}</h3>;
+            if (block.type === "ul") {
+              return (
+                <ul>
+                  {block.items.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              );
+            }
+            return <p>{block.text}</p>;
+          })}
         </div>
-      </footer>
-    </article>
+
+        <footer class="article-cta">
+          <h2>Want this applied to your business?</h2>
+          <p>
+            Let's turn ideas like these into a conversion-focused website, content system, or sales funnel.
+          </p>
+          <div class="cta-row">
+            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="button">
+              Chat on WhatsApp <span>↗</span>
+            </a>
+            <a href="/contact/" class="button button-ghost">Start a Project Brief</a>
+          </div>
+        </footer>
+      </article>
+    )}
   </main>
 
   <Footer />
 </Layout>
 
 <style>
-  .blog-post {
-    max-width: 800px;
-    padding-block: clamp(4rem, 8vw, 8rem);
+  .article-wrap {
+    max-width: 780px;
+    padding-block: clamp(3.5rem, 7vw, 6.5rem);
   }
 
-  .post-header {
-    margin-bottom: 3rem;
-    padding-bottom: 3rem;
-    border-bottom: 1px solid var(--color-line);
-  }
-
-  .post-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: var(--text-xs);
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    color: var(--color-muted);
+  .back-link {
+    display: inline-block;
     margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--color-muted);
+    text-decoration: none;
   }
 
-  .post-category {
+  .back-link:hover {
     color: var(--color-accent);
   }
 
-  .post-header h1 {
-    font-size: clamp(2.4rem, 5vw, 4rem);
-    letter-spacing: -0.04em;
-    line-height: 1.1;
-    margin-bottom: 1.5rem;
+  .article-header {
+    padding-bottom: 2.25rem;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid var(--color-line);
   }
 
-  .post-lead {
-    font-size: clamp(1.15rem, 2vw, 1.35rem);
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
     color: var(--color-muted);
-    line-height: 1.5;
+    margin-bottom: 1rem;
   }
 
-  .post-body {
+  .article-cat {
+    color: var(--color-accent);
+  }
+
+  .article-header h1 {
+    font-size: clamp(2.1rem, 4.4vw, 3.4rem);
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+  }
+
+  .article-lead {
+    font-size: clamp(1.05rem, 1.9vw, 1.25rem);
+    color: var(--color-muted);
+    line-height: 1.65;
+  }
+
+  .article-body {
     display: flex;
     flex-direction: column;
-    gap: 1.75rem;
-    font-size: 1.15rem;
-    line-height: 1.75;
+    gap: 1.35rem;
+  }
+
+  .article-body h2 {
+    font-size: clamp(1.45rem, 2.5vw, 1.95rem);
+    letter-spacing: -0.02em;
+    margin-top: 1.25rem;
+    margin-bottom: 0;
+  }
+
+  .article-body h3 {
+    font-size: 1.25rem;
+    margin-top: 0.9rem;
+    margin-bottom: 0;
+  }
+
+  .article-body p,
+  .article-body li {
+    font-size: 1.06rem;
+    line-height: 1.78;
     color: var(--color-ink);
   }
 
-  .post-body p {
+  .article-body p {
     margin: 0;
   }
 
-  .post-footer {
-    margin-top: 5rem;
-    padding-top: 3rem;
-    border-top: 1px solid var(--color-line);
+  .article-body ul {
+    padding-left: 1.35rem;
+    margin: 0.25rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
   }
 
-  .author-box {
+  .article-cta {
+    margin-top: 4rem;
+    padding: clamp(2rem, 4vw, 2.75rem);
     background: var(--color-paper-deep);
     border: 1px solid var(--color-line);
-    padding: 3rem;
   }
 
-  .author-box h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.75rem;
+  .article-cta h2 {
+    font-size: 1.55rem;
+    margin-bottom: 0.5rem;
   }
 
-  .author-box p {
-    font-size: 1.05rem;
+  .article-cta p {
     color: var(--color-muted);
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+  }
+
+  .button-ghost {
+    background: transparent !important;
+    color: var(--color-ink) !important;
+    border: 1px solid var(--color-line) !important;
   }
 </style>

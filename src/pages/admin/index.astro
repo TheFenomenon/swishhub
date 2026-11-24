@@ -1,0 +1,360 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/site/Header.astro";
+import Footer from "../../components/site/Footer.astro";
+import { getSql } from "../../lib/db";
+
+export const prerender = false;
+
+interface PageRow {
+  path: string;
+  views: number;
+  whatsapp_clicks: number;
+}
+
+let totalViews = 0;
+let totalWhatsappClicks = 0;
+let publishedPostsCount = 0;
+let topPages: PageRow[] = [];
+let dbError = "";
+
+try {
+  const sql = getSql();
+
+  const eventRows = await sql`
+    SELECT
+      path,
+      COUNT(*) FILTER (WHERE event_type = 'pageview')::int AS views,
+      COUNT(*) FILTER (WHERE event_type = 'whatsapp_click')::int AS whatsapp_clicks
+    FROM page_events
+    GROUP BY path
+    ORDER BY views DESC, whatsapp_clicks DESC
+    LIMIT 15
+  `;
+
+  topPages = (eventRows ?? []).map((r: any) => ({
+    path: String(r.path ?? "/"),
+    views: Number(r.views ?? 0),
+    whatsapp_clicks: Number(r.whatsapp_clicks ?? 0),
+  }));
+
+  totalViews = topPages.reduce((sum, row) => sum + row.views, 0);
+  totalWhatsappClicks = topPages.reduce((sum, row) => sum + row.whatsapp_clicks, 0);
+
+  const countRows = await sql`
+    SELECT COUNT(*)::int AS count
+    FROM blog_posts
+    WHERE status = 'published'
+  `;
+  publishedPostsCount = Number(countRows?.[0]?.count ?? 0);
+} catch (err) {
+  console.error("Admin dashboard query failed:", err);
+  dbError = "Could not load live analytics from Neon. Check DATABASE_URL and tables.";
+}
+---
+
+<Layout
+  title="Admin Dashboard — SwishHub Interactive Limited"
+  description="Monitor page views, WhatsApp conversion clicks, and published blog posts."
+>
+  <Header />
+
+  <main id="main-content">
+    <section class="admin-dash container">
+      <div class="dash-top">
+        <div>
+          <p class="section-label">ADMIN STUDIO</p>
+          <h1>Performance & <em>content control</em>.</h1>
+          <p class="session-note">
+            Session auto-locks after 15 minutes of inactivity.
+          </p>
+        </div>
+
+        <div class="dash-actions">
+          <a href="/admin/blog" class="button">Manage Blog Posts <span>→</span></a>
+          <a href="/blog/" class="button button-ghost">View Public Blog</a>
+          <a href="/api/admin/logout" id="admin-logout-link" class="logout-btn">
+            Log out
+          </a>
+        </div>
+      </div>
+
+      {dbError && (
+        <div class="alert-box">
+          <strong>Database Notice:</strong> {dbError}
+        </div>
+      )}
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <span class="metric-label">TOTAL PAGEVIEWS</span>
+          <strong class="metric-value">{totalViews}</strong>
+        </div>
+
+        <div class="metric-card">
+          <span class="metric-label">WHATSAPP CLICKS</span>
+          <strong class="metric-value accent">{totalWhatsappClicks}</strong>
+        </div>
+
+        <div class="metric-card">
+          <span class="metric-label">PUBLISHED DB ARTICLES</span>
+          <strong class="metric-value">{publishedPostsCount}</strong>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <h2>Tracked Page Performance</h2>
+        {topPages.length === 0 ? (
+          <p class="empty-note">
+            No tracked events recorded yet. Visit any page or click a WhatsApp link to populate events.
+          </p>
+        ) : (
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Path</th>
+                  <th>Pageviews</th>
+                  <th>WhatsApp Clicks</th>
+                </tr>
+              </thead>
+              <tbody>
+                {topPages.map((row) => (
+                  <tr>
+                    <td class="mono">{row.path}</td>
+                    <td>{row.views}</td>
+                    <td>{row.whatsapp_clicks}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  const INACTIVITY_MS = 15 * 60 * 1000; // 15 minutes
+  let inactivityTimer: number | undefined;
+  let loggingOut = false;
+
+  async function performAdminLogout() {
+    if (loggingOut) return;
+    loggingOut = true;
+    if (inactivityTimer) window.clearTimeout(inactivityTimer);
+
+    try {
+      const res = await fetch("/api/admin/logout", {
+        method: "POST",
+        credentials: "same-origin",
+        redirect: "follow",
+      });
+      if (res.redirected) {
+        window.location.replace(res.url);
+        return;
+      }
+    } catch {
+      // Fallback navigation below
+    }
+
+    window.location.replace("/api/admin/logout");
+  }
+
+  const logoutLink = document.getElementById("admin-logout-link");
+  logoutLink?.addEventListener("click", (event) => {
+    event.preventDefault();
+    performAdminLogout();
+  });
+
+  function resetInactivityTimer() {
+    if (loggingOut) return;
+    if (inactivityTimer) window.clearTimeout(inactivityTimer);
+    inactivityTimer = window.setTimeout(() => {
+      performAdminLogout();
+    }, INACTIVITY_MS);
+  }
+
+  const activityEvents: Array<keyof WindowEventMap> = [
+    "mousemove",
+    "mousedown",
+    "keydown",
+    "scroll",
+    "touchstart",
+    "click",
+  ];
+
+  for (const evt of activityEvents) {
+    window.addEventListener(evt, resetInactivityTimer, { passive: true });
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) {
+      resetInactivityTimer();
+    }
+  });
+
+  resetInactivityTimer();
+</script>
+
+<style>
+  .admin-dash {
+    padding-block: clamp(3.5rem, 7vw, 6.5rem);
+  }
+
+  .dash-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .dash-top h1 {
+    font-size: clamp(2.1rem, 4.2vw, 3.3rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-top: 0.65rem;
+  }
+
+  .dash-top h1 em {
+    color: var(--color-accent);
+    font-weight: 400;
+  }
+
+  .session-note {
+    margin-top: 0.6rem;
+    font-size: 0.9rem;
+    color: var(--color-muted);
+  }
+
+  .dash-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .button-ghost {
+    background: transparent !important;
+    color: var(--color-ink) !important;
+    border: 1px solid var(--color-line) !important;
+  }
+
+  .logout-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.78rem 1.35rem;
+    font-family: var(--font-heading);
+    font-size: 0.92rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: #fff;
+    background: var(--color-accent);
+    border: 1px solid var(--color-accent);
+    cursor: pointer;
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .logout-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  .alert-box {
+    padding: 1rem 1.25rem;
+    margin-bottom: 2rem;
+    background: var(--color-paper-deep);
+    border: 1px solid var(--color-accent);
+    color: var(--color-ink);
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .metric-card {
+    background: var(--color-paper-deep);
+    border: 1px solid var(--color-line);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .metric-label {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+  }
+
+  .metric-value {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    line-height: 1;
+    color: var(--color-ink);
+  }
+
+  .metric-value.accent {
+    color: var(--color-accent);
+  }
+
+  .table-card {
+    background: var(--color-paper-deep);
+    border: 1px solid var(--color-line);
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+  }
+
+  .table-card h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .empty-note {
+    color: var(--color-muted);
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  th,
+  td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  th {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .mono {
+    font-family: monospace;
+    font-size: 0.92rem;
+  }
+
+  @media (max-width: 820px) {
+    .metrics-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

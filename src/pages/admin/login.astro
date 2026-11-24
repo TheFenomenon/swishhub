@@ -1,0 +1,160 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { COOKIE_NAME, verifySessionToken } from "../../lib/auth";
+
+export const prerender = false;
+
+const token = Astro.cookies.get(COOKIE_NAME)?.value;
+if (verifySessionToken(token)) {
+  return Astro.redirect("/admin");
+}
+---
+
+<Layout title="Admin Login — SwishHub" description="Private administrative access.">
+  <Fragment slot="head">
+    <meta name="robots" content="noindex, nofollow" />
+  </Fragment>
+
+  <main class="login-wrap">
+    <div class="login-card">
+      <p class="section-label">SWISHHUB INTERNAL</p>
+      <h1>Admin Access</h1>
+      <p class="login-sub">Sign in to manage blog posts and monitor site performance.</p>
+
+      <form id="loginForm" class="login-form">
+        <label for="password">Admin Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required
+          autocomplete="current-password"
+          placeholder="Enter admin password"
+        />
+        <p id="loginError" class="login-error" role="alert" hidden></p>
+        <button type="submit" class="button" id="loginBtn">Sign In</button>
+      </form>
+
+      <a href="/" class="back-home">← Back to SwishHub website</a>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .login-wrap {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 1.5rem;
+  }
+
+  .login-card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--color-paper-deep);
+    border: 1px solid var(--color-line);
+    padding: clamp(2rem, 4vw, 2.75rem);
+  }
+
+  .login-card h1 {
+    font-size: 2rem;
+    letter-spacing: -0.03em;
+    margin-block: 0.6rem 0.5rem;
+  }
+
+  .login-sub {
+    color: var(--color-muted);
+    font-size: 0.95rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .login-form label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+
+  .login-form input {
+    padding: 0.8rem 0.95rem;
+    background: var(--color-paper);
+    border: 1px solid var(--color-line);
+    color: var(--color-ink);
+    font-size: 1rem;
+  }
+
+  .login-form input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+  }
+
+  .login-error {
+    color: #b42318;
+    font-size: 0.88rem;
+    margin: 0.25rem 0 0;
+  }
+
+  .login-form button {
+    margin-top: 0.5rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .back-home {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-size: 0.88rem;
+    color: var(--color-muted);
+    text-decoration: none;
+  }
+
+  .back-home:hover {
+    color: var(--color-accent);
+  }
+</style>
+
+<script>
+  const form = document.getElementById("loginForm") as HTMLFormElement | null;
+  const errorEl = document.getElementById("loginError");
+  const btn = document.getElementById("loginBtn") as HTMLButtonElement | null;
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!errorEl || !btn) return;
+    errorEl.hidden = true;
+    btn.disabled = true;
+    btn.textContent = "Signing in...";
+
+    const formData = new FormData(form);
+    const password = formData.get("password");
+
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        errorEl.textContent = data.error || "Login failed.";
+        errorEl.hidden = false;
+        btn.disabled = false;
+        btn.textContent = "Sign In";
+        return;
+      }
+
+      window.location.href = "/admin";
+    } catch {
+      errorEl.textContent = "Network error. Please try again.";
+      errorEl.hidden = false;
+      btn.disabled = false;
+      btn.textContent = "Sign In";
+    }
+  });
+</script>

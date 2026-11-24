@@ -1,8 +1,10 @@
-
-import { defineConfig } from 'astro/config';
-import sitemap from '@astrojs/sitemap';
+// @ts-check
+import { defineConfig } from "astro/config";
+import vercel from "@astrojs/vercel";
 
 export default defineConfig({
-  site: 'https://swishhub-swishhub.vercel.app',
-  integrations: [sitemap()],
+  site: "https://swishmart.com.ng",
+  adapter: vercel({
+    webAnalytics: { enabled: true },
+  }),
 });
